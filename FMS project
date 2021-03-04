@@ -1,0 +1,20 @@
+// Teeth brushing activity 
+let img;
+function preload() {
+  teeth = loadImage('teeth.jpg');
+  brush = loadImage('Toothbrush.png')
+
+}
+
+function setup() {
+  createCanvas(10000, 600);
+  
+}
+
+function draw() {
+  background(440);
+ image(teeth,80,150);
+}
+function draw() {
+  //image(brush,150,150);
+}
