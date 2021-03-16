@@ -1,5 +1,4 @@
 //GUI main menu
-http://127.0.0.1:8887 //image folder url
 let img;
 function preload() {
   confetti = loadImage('confetti.png')
@@ -13,10 +12,10 @@ function preload() {
 }
 function setup() {
   createCanvas(1000, 600);
-  confetti.resize(1000,600);
 }
  function draw() {
-  image(confetti,0,50);
+   image(confetti,0,50);
+  confetti.resize(1000,600);
   image(title,300,100)
   image(toothgui,0,190 )
   image(toothtitle, 70, 470)
@@ -24,34 +23,53 @@ function setup() {
   image(drawtitle, 370, 470)
   image(cube, 750, 250)
   image(cubetitle, 750, 470)
-  noFill(); // invisible hitbox
+  noFill();
+  noStroke();
   rect(50, 240, 220, 260); // button to click on
-  noFill(); // invisible hitbox
+  noFill();
   rect(310, 240, 332, 260); // button to click on
-  noFill(); //invisible hitbox
+  noFill();
   rect(700,240,270,260); // button to click on
  }
+ //end
 
 
 
 
-// Teeth brushing activity 
-let img;
+// Teeth brushing activity placeholder
+flet img;
 function preload() {
   teeth = loadImage('teeth.jpg');
   brush = loadImage('Toothbrush.png')
-
 }
-
 function setup() {
   createCanvas(10000, 600);
-  
 }
-
 function draw() {
   background(440);
  image(teeth,80,150);
 }
 function draw() {
-  //image(brush,150,150);
+  background(220);
 }
+//end 
+
+//drawing activity placeholder
+function setup() {
+  createCanvas(1000, 600);
+}
+
+function draw() {
+  background(220);
+}
+//end
+
+//blocks activity placeholder
+function setup() {
+  createCanvas(1000, 600);
+}
+function draw() {
+  background(220);
+}
+//end
+
