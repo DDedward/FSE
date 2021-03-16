@@ -1,3 +1,4 @@
+//GUI main menu
 let img;
 function preload() {
   confetti = loadImage('confetti.png')
