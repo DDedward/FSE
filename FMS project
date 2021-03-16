@@ -1,3 +1,38 @@
+let img;
+function preload() {
+  confetti = loadImage('confetti.png')
+  toothgui = loadImage('toothgui.png')
+  toothtitle = loadImage ('toothtitle.png')
+  title = loadImage('guititle.png')
+  drawgui = loadImage('drawgui.png')
+  drawtitle = loadImage('drawtitle.png')
+  cube = loadImage('cube.png')
+  cubetitle = loadImage('cubetitle.png')
+}
+function setup() {
+  createCanvas(1000, 600);
+  confetti.resize(1000,600);
+}
+ function draw() {
+  image(confetti,0,50);
+  image(title,300,100)
+  image(toothgui,0,190 )
+  image(toothtitle, 70, 470)
+  image(drawgui, 300, 220)
+  image(drawtitle, 370, 470)
+  image(cube, 750, 250)
+  image(cubetitle, 750, 470)
+  fill(0); // set to 0 temporarily
+  rect(50, 240, 220, 260); // button to click on
+  fill(0); //  set to 0 temporarily
+  rect(310, 240, 332, 260); // button to click on
+  fill(0); //set to 0 temporarily
+  rect(700,240,270,260); // button to click on
+ }
+
+
+
+
 // Teeth brushing activity 
 let img;
 function preload() {
