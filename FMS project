@@ -1,7 +1,7 @@
 let MENU = 0;
 let img;
 function preload() {
-  confetti = loadImage('confetti.png')
+  confetti = loadImage('P5JS/confetti.png')
   toothgui = loadImage('toothgui.png')
   toothtitle = loadImage ('toothtitle.png')
   title = loadImage('guititle.png')
