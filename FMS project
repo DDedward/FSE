@@ -9,6 +9,9 @@ function preload() {
   drawtitle = loadImage('drawtitle.png')
   cube = loadImage('cube.png')
   cubetitle = loadImage('cubetitle.png')
+  teeth = loadImage('teeth.jpg');
+  brush = loadImage('Toothbrush.png')
+
 }
 function setup() {
   createCanvas(1000, 600);
@@ -31,6 +34,14 @@ function mouseClicked() {
  }
  function draw() {
    //print(mouseX,mouseY)
+    noFill();
+   stroke('#fae');
+  strokeWeight(4);
+  rect(50, 240, 220, 260); // button to click on
+  noFill();
+  rect(310, 240, 332, 260); // button to click on
+  noFill();
+  rect(700,240,270,260); // button to click on
    image(confetti,0,0);
   confetti.resize(1000,600);
   image(title,300,100)
@@ -40,26 +51,19 @@ function mouseClicked() {
   image(drawtitle, 370, 470)
   image(cube, 750, 250)
   image(cubetitle, 750, 470)
-  noFill();
-   stroke('#fae');
-  strokeWeight(4);
-  rect(50, 240, 220, 260); // button to click on
-  noFill();
-  rect(310, 240, 332, 260); // button to click on
-  noFill();
-  rect(700,240,270,260); // button to click om
+ 
+  // print(mouseX, mouseY)
    
-   if (MENU == 1) {
+  if (MENU == 1) {
     background(0, 255, 255)
     fill(0)
-     noStroke();
+    noStroke();
     textSize(20)
     text('PLACEHOLDER - Right Click to return to menu', 525, 30)
     if (mouseButton == RIGHT) {
       MENU = 0
     }
-   }
-   
+  }
    if (MENU == 2) {
     background(0, 255, 255)
     noStroke();
