@@ -87,3 +87,233 @@ function mouseClicked() {
    }
      
  }
+ 
+ 
+ 
+ //---------------ToothGame---------//
+ //Copy this into <head> in index.HTML so the sound will work
+ <script src="path/to/p5.sound.js"></script>
+let img;
+var timer;
+var counter = 60;
+var seconds, minutes;
+var t = counter;
+
+function preload() {
+  teeth = loadImage('teeth.png');
+  bubbles = loadImage('bubbles.jpg');
+  warning = loadImage('warning.png');
+  soundFormats('mp3', 'ogg');
+  song = loadSound('happy children');
+  song.setVolume(0.2);
+  
+}
+var dragging = false; // Is the object being dragged?
+var rollover = false; // Is the mouse over the ellipse?
+var x, y, w, h;          // Location and size
+var offsetX, offsetY;    // Mouseclick offset
+
+//-----------SETUP-------------------------//
+function setup() {
+  setInterval(timeIt, 1000);
+  createCanvas(1000, 600);
+  bubbles.resize(1000,600);
+  teeth.resize(380,180)
+  warning.resize(150,150)
+ textSize(20)
+textFont("Comic Sans MS")
+//brush location
+  x = 600;
+  y = 250;
+  w = 200;
+  h = 20;
+  song.play();
+  
+}
+
+//----------DRAW-----------------------//
+function draw() {
+  
+//---------images-------//
+  //print(mouseX,mouseY)
+  background(255);
+   tint(255, 127)
+  image(bubbles,0,0)
+  tint(330, 330); 
+  image(teeth,90,150)
+  
+  
+//-------shapes---------//  
+  stroke(0);
+  fill(0,50,100);
+  rect(x, y, w, h)
+  fill(220)
+  rect(88,470,75,40)
+  
+//-----warning---------//
+  if (dragging == true){
+    if (mouseX > 90 && mouseX < 470 && mouseY > 160 &&     mouseY < 320) {
+      print("goodjob")
+    } else {
+      image(warning, 600, 80)
+      fill(0)
+      text("keep brushing!",630,250)
+  } 
+}
+  
+//-----timer--------//
+  fill(0)
+if (counter >= t) {
+     text(minutes + ":" + seconds, 100,500);
+    }  
+    if (counter < t) {
+    text(minutes + ":" + seconds, 100,500);
+    }
+    if (counter == 0) {
+    
+    text('game over', 500, 100 + 15);
+    }  
+  
+//-------drag-functions---------//
+// Is mouse over object
+  if (mouseX > x && mouseX < x + w && mouseY > y && mouseY < y + h) {
+    rollover = true;
+  } 
+  else {
+    rollover = false;
+  }
+  // Adjust location if being dragged
+  if (dragging) {
+    x = mouseX + offsetX;
+    y = mouseY + offsetY;
+  }
+}
+function mousePressed() {
+  // Did I click on the rectangle?
+  if (mouseX > x && mouseX < x + w && mouseY > y && mouseY < y + h) {
+    dragging = true;
+    // If so, keep track of relative location of click to corner of rectangle
+    offsetX = x-mouseX;
+    offsetY = y-mouseY;
+  }
+}
+function mouseReleased() {
+  // Quit dragging
+  dragging = false;
+}
+
+
+//-------timer-functions-------//
+function timeIt() {
+  // 1 counter = 1 second
+  if (counter > 0) {
+    counter--;
+  }
+  minutes = floor(counter/60);
+  seconds = counter % 60;
+  
+  // if (counter < 60)
+  
+//text(minutes + ":" + seconds);
+}
+
+
+//------------------------END---------//
+
+//------------This-Class-Is-Needed-For-activity-to-work------/
+ class Draggable {
+  constructor(x, y, w, h) {
+    this.dragging = false; // Is the object being dragged?
+    this.rollover = false; // Is the mouse over the ellipse?
+    this.x = x;
+    this.y = y;
+    this.w = w;
+    this.h = h;
+    this.offsetX = 0;
+    this.offsetY = 0;
+  }
+
+  over() {
+    // Is mouse over object
+    if (mouseX > this.x && mouseX < this.x + this.w && mouseY > this.y && mouseY < this.y + this.h) {
+      this.rollover = true;
+    } else {
+      this.rollover = false;
+    }
+  }
+
+  update() {
+    // Adjust location if being dragged
+    if (this.dragging) {
+      this.x = mouseX + this.offsetX;
+      this.y = mouseY + this.offsetY;
+    }
+  }
+
+  show() {
+    stroke(0);
+    // Different fill based on state
+    if (this.dragging) {
+      fill(50);
+    } else if (this.rollover) {
+      fill(100);
+    } else {
+      fill(175, 200);
+    }
+    rect(this.x, this.y, this.w, this.h);
+  }
+
+  pressed() {
+    // Did I click on the rectangle?
+    if (mouseX > this.x && mouseX < this.x + this.w && mouseY > this.y && mouseY < this.y + this.h) {
+      this.dragging = true;
+      // If so, keep track of relative location of click to corner of rectangle
+      this.offsetX = this.x - mouseX;
+      this.offsetY = this.y - mouseY;
+    }
+  }
+
+  released() {
+    // Quit dragging
+    this.dragging = false;
+  }
+}
+//-------END-----------//
+
+//-------TYPE ACTIVITY----------//
+var words = ["monkey", "rain","dance","purple","work"]; //Insert array of random words here
+
+
+function preload(){
+paper = loadImage('paper.png')
+}
+
+
+function setup() {
+  createCanvas(1000, 600);
+   paper.resize(1000,600);
+  
+  input = createInput();
+  input.position(410, 500);
+
+  button = createButton('enter');
+  button.position(input.x + input.width, 500);
+noLoop()
+
+}
+
+function draw() {
+   image(paper,0,0);
+  textSize(24)
+  text("Type in what you see below!", 360, 28)
+  textSize(20);
+  text("(Remember to include uppercase letters and symbols)",280,54)
+  var randomword = random(words);//picks a random word
+  textAlign(CENTER);
+  textSize(100);
+  textFont("Comic Sans MS")
+  text(randomword,500,200);
+  
+  
+//line(500, 0, 500, 600); //<-- this will draw a line in the middle of the screen if you need to align anything//
+}
