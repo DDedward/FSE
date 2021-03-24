@@ -1,16 +1,22 @@
 let MENU = 0;
 let img;
 function preload() {
-  confetti = loadImage('confetti.png')
-  toothgui = loadImage('toothgui.png')
-  toothtitle = loadImage ('toothtitle.png')
-  title = loadImage('guititle.png')
-  drawgui = loadImage('drawgui.png')
-  drawtitle = loadImage('drawtitle.png')
-  cube = loadImage('cube.png')
-  cubetitle = loadImage('cubetitle.png')
-  teeth = loadImage('teeth.jpg');
-  brush = loadImage('Toothbrush.png')
+  
+  confetti = loadImage('https://cdn.glitch.com/3ae64af0-29e8-4bc0-9d56-ab65a18884e2%2Fconfetti.png?v=1615883637897')
+  
+  toothgui = loadImage('https://cdn.glitch.com/3ae64af0-29e8-4bc0-9d56-ab65a18884e2%2Ftoothgui.png?v=1615883637488')
+  
+  toothtitle = loadImage ('https://cdn.glitch.com/3ae64af0-29e8-4bc0-9d56-ab65a18884e2%2Ftoothtitle.png?v=1615883637651')
+  
+  title = loadImage('https://cdn.glitch.com/3ae64af0-29e8-4bc0-9d56-ab65a18884e2%2Fguititle.png?v=1615883638048')
+  
+  drawgui = loadImage('https://cdn.glitch.com/3ae64af0-29e8-4bc0-9d56-ab65a18884e2%2Fdrawgui.png?v=1615883638010')
+  
+  drawtitle = loadImage('https://cdn.glitch.com/3ae64af0-29e8-4bc0-9d56-ab65a18884e2%2Fdrawtitle.png?v=1615883637222')
+  
+  cube = loadImage('https://cdn.glitch.com/3ae64af0-29e8-4bc0-9d56-ab65a18884e2%2Fcube.png?v=1615883637221')
+  
+ cubetitle = loadImage('https://cdn.glitch.com/3ae64af0-29e8-4bc0-9d56-ab65a18884e2%2Fcubetitle.png?v=1615883637222')
 
 }
 function setup() {
@@ -50,7 +56,7 @@ function mouseClicked() {
   image(drawgui, 300, 230)
   image(drawtitle, 370, 470)
   image(cube, 750, 250)
-  image(cubetitle, 750, 470)
+ image(cubetitle, 750, 470)
  
   // print(mouseX, mouseY)
    
@@ -84,11 +90,9 @@ function mouseClicked() {
     if (mouseButton == RIGHT) {
       MENU = 0
     }
-   }
-     
+   } 
  }
- 
- 
+ //-------END----//
  
  //---------------ToothGame---------//
  //Copy this into <head> in index.HTML so the sound will work
