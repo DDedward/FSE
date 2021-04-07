@@ -1,5 +1,27 @@
+
 let MENU = 0;
 let img;
+var timer;
+var counter = 60;
+var seconds, minutes;
+var t = 6;
+var dragging = false; // Is the object being dragged?
+var rollover = false; // Is the mouse over the ellipse?
+bubbles = []; 
+let dirt;
+let mouth;
+let toothbrush;
+var x;
+var y;
+var VarX = 500;
+var VarY = 300;
+
+var words = ["monkey", "rain","dance","purple","work"]; //Insert array of random words here
+var displayRandom 
+var i = 0
+var z;
+var button;
+//------------------------------------------------------------------Preloading-images---//
 function preload() {
   
   confetti = loadImage('https://cdn.glitch.com/3ae64af0-29e8-4bc0-9d56-ab65a18884e2%2Fconfetti.png?v=1615883637897')
@@ -16,13 +38,59 @@ function preload() {
   
   cube = loadImage('https://cdn.glitch.com/3ae64af0-29e8-4bc0-9d56-ab65a18884e2%2Fcube.png?v=1615883637221')
   
- cubetitle = loadImage('https://cdn.glitch.com/3ae64af0-29e8-4bc0-9d56-ab65a18884e2%2Fcubetitle.png?v=1615883637222')
+  cubetitle = loadImage('https://cdn.glitch.com/3ae64af0-29e8-4bc0-9d56-ab65a18884e2%2Fcubetitle.png?v=1615883637222')
+  
+  teeth=loadImage('https://cdn.glitch.com/3ae64af0-29e8-4bc0-9d56-ab65a18884e2%2Fteeth.png?v=1616611426193');
+  
+  bubbles1 = loadImage('https://cdn.glitch.com/3ae64af0-29e8-4bc0-9d56-ab65a18884e2%2Fbubbles.jpg?v=1616647554150');
+  
+  warning = loadImage("https://cdn.glitch.com/3ae64af0-29e8-4bc0-9d56-ab65a18884e2%2Fwarning.png?v=1616647565367");
+  
+  soundFormats('mp3', 'ogg');
+  song = loadSound('https://cdn.glitch.com/3ae64af0-29e8-4bc0-9d56-ab65a18884e2%2Fhappy%20children.mp3?v=1616647616849');
+  song.setVolume(0.2);
 
+  Toothbrush = loadImage('https://cdn.glitch.com/3ae64af0-29e8-4bc0-9d56-ab65a18884e2%2FToothbrush.png?v=1616723104640')
+   
+  dirt = loadImage("https://cdn.glitch.com/3ae64af0-29e8-4bc0-9d56-ab65a18884e2%2FNicePng_pile-of-dirt-png_889728%20(1).png?v=1617085607099")
+  
+  paper = loadImage('paper.png')
+  
+  
 }
+//------------------------------------------------------------------setup---//
 function setup() {
   createCanvas(1000, 600);
-   confetti.resize(1000,600);
+  confetti.resize(1000,600);
+  warning.resize(150,150)
+  Toothbrush.resize(700,500)
+  setInterval(timeIt, 1000);
+  for (let i = 0; i < 70; i++) {
+		let x = random(80,390); // x bounds of dirt 
+		let y = random(150, 250); // y bounds of dirt
+		let r = random(5,10); // 2nd val = size of dirt/sensitivity?
+		let b = new Bubble (x, y, r);
+		bubbles.push(b);
 }
+   //song.play();
+}
+
+//--------------------------------------------------------------image-dragging-functionality---//
+function mouseDragged() {
+  if ((mouseX > 0) && (mouseX < 1000)) {
+    if ((mouseY > 0) && (mouseY < 600)) {
+      VarX = mouseX;
+      VarY = mouseY
+       for (let i = 0; i < bubbles.length; i++) {
+    if (bubbles[i].contains(mouseX,mouseY)) {
+      bubbles.splice(i,1);
+        }
+	  }
+    }
+  }
+}
+
+//------------------------------------------------------------------menu-functionality---//
 function mouseClicked() {
   if (MENU == 0) {
     if (mouseY > 240 && mouseY < 510) {
@@ -34,22 +102,41 @@ function mouseClicked() {
       }
     if (mouseX > 720 && mouseX < 980) {
         MENU = 3
+      
+       
+
       }
     }
   }
- }
+  
+  if(mouseX > 900 && mouseX < 975 && mouseY > 500 && mouseY < 578) {
+      MENU = 0;
+      loop()
+      button.hide()
+      input.value('').hide();
+  }
+  
+  
+  if(mouseX > 900 && mouseX < 975 && mouseY > 500 && mouseY < 578) {
+      MENU = 0;
+  }
+
+
+  
+  if(mouseX > 570 && mouseX < 630 && mouseY > 340 && mouseY < 410){
+    MENU = 1;
+  }
+}
  function draw() {
-   //print(mouseX,mouseY)
-    noFill();
-   stroke('#fae');
+  noFill();
+  stroke('#fae');
   strokeWeight(4);
   rect(50, 240, 220, 260); // button to click on
   noFill();
   rect(310, 240, 332, 260); // button to click on
   noFill();
   rect(700,240,270,260); // button to click on
-   image(confetti,0,0);
-  confetti.resize(1000,600);
+  image(confetti,0,0,1000,600);
   image(title,300,100)
   image(toothgui,0,195 )
   image(toothtitle, 70, 470)
@@ -57,30 +144,114 @@ function mouseClicked() {
   image(drawtitle, 370, 470)
   image(cube, 750, 250)
  image(cubetitle, 750, 470)
- 
-  // print(mouseX, mouseY)
+   noFill();
+   noStroke();
    
+//------------------------------------------------------------------ACTIVITY-1-START---//
   if (MENU == 1) {
-    background(0, 255, 255)
-    fill(0)
-    noStroke();
-    textSize(20)
-    text('PLACEHOLDER - Right Click to return to menu', 525, 30)
-    if (mouseButton == RIGHT) {
-      MENU = 0
-    }
-  }
-   if (MENU == 2) {
-    background(0, 255, 255)
-    noStroke();
-    fill(0)
-    textSize(20)
-    text('PLACEHOLDER - Right Click to return to menu', 525, 30)
-    if (mouseButton == RIGHT) {
-      MENU = 0
-    }
-   }
+  background(340)
    
+   
+  
+//------------------------------------------------------------------activity-1-images---//
+
+  //print(mouseX,mouseY)
+  image(bubbles1, 0,0, 1000,600); 
+  image(teeth,90,150,450,250)
+  image(Toothbrush, VarX, VarY, 300, 100);
+  image(cube, 900,500, 80,80)
+  for (let i = 0; i < bubbles.length; i++) {
+  bubbles[i].show(); }
+  fill(0);
+  textFont("Comic Sans MS");
+  text("Drag the brush with your mouse to brush the teeth!", 300,30);
+  text("Clean the teeth for 1 minute straight!", 370,50);  
+  fill(220)
+  rect(88,470,75,40)
+  
+//------------------------------------------------------------------activity-1-warning---//
+  
+print (mouseX,mouseY)
+  if (mouseX > 85 && mouseX < 540 && mouseY > 140 && mouseY < 385){
+  } else {
+  image(warning, 600, 80)
+  fill(0)
+  text("keep the brush on the teeth!",570,250)
+  } 
+  
+  
+//------------------------------------------------------------------activity-1-timer---//
+    fill(0)
+    textSize(20)
+  if (counter >= t) {
+     text(minutes + ":" + seconds, 100,500);
+    }  
+  if (counter < t) {
+    text(minutes + ":" + seconds, 100,500);
+    }
+  if (counter == 0) {
+  fill(255, 204, 0);
+  ellipse(600,270,510)
+  fill(0);
+  textSize(100)
+  text("Good job!",390,270)
+  textSize(27)
+  text( "click the home button to return",370,320)
+  text("to the main menu!",470, 340)
+    }
+  
+}
+
+    
+//------------------------------------------------------------------ACTIVITY-1-END---//
+   
+   
+   
+   
+   
+//------------------------------------------------------------------ACTIVITY-2-START---//
+   
+   //------------------------------------------------------------------activity-2--images---//
+   
+if (MENU ==2){
+  textSize(24)
+  text("Type in what you see below!", 360, 28)
+  textSize(20);
+  text("(Remember to include uppercase letters and symbols)",280,54)
+  noLoop()
+  image(paper,0,0,1000,600);
+  
+  input = createInput();
+  input.position(410, 500);
+  button = createButton('enter');
+  button.position(input.x + input.width, 500);
+ 
+ 
+
+ 
+//------------------------------------------------------------------activity-2-inputT---//
+  
+
+  
+  randomWord() 
+  button.mousePressed(randomWord);
+  button.mousePressed(compareStrings) 
+  
+
+   //------------------------------------------------------------------activity-2-Timer---//
+  
+ 
+
+   
+  
+image(cube, 900,500, 80,80)
+  textSize(20)
+  fill(300)
+  text("home",929,550)
+
+}
+//-------------------------------------------------------------------ACTIVITY-2-END---//
+  
    if (MENU == 3) {
     background(0, 255, 255)
     noStroke();
@@ -89,98 +260,9 @@ function mouseClicked() {
     text('PLACEHOLDER - Right Click to return to menu', 525, 30)
     if (mouseButton == RIGHT) {
       MENU = 0
-    }
-   } 
- }
- //-------END----//
- 
- //---------------ToothGame---------//
- //Copy this into <head> in index.HTML so the sound will work
- <script src="path/to/p5.sound.js"></script>
-let img;
-var timer;
-var counter = 60;
-var seconds, minutes;
-var t = counter;
-
-function preload() {
-  teeth = loadImage('teeth.png');
-  bubbles = loadImage('bubbles.jpg');
-  warning = loadImage('warning.png');
-  soundFormats('mp3', 'ogg');
-  song = loadSound('happy children');
-  song.setVolume(0.2);
-  
+    } 
 }
-var dragging = false; // Is the object being dragged?
-var rollover = false; // Is the mouse over the ellipse?
-var x, y, w, h;          // Location and size
-var offsetX, offsetY;    // Mouseclick offset
-
-//-----------SETUP-------------------------//
-function setup() {
-  setInterval(timeIt, 1000);
-  createCanvas(1000, 600);
-  bubbles.resize(1000,600);
-  teeth.resize(380,180)
-  warning.resize(150,150)
- textSize(20)
-textFont("Comic Sans MS")
-//brush location
-  x = 600;
-  y = 250;
-  w = 200;
-  h = 20;
-  song.play();
-  
-}
-
-//----------DRAW-----------------------//
-function draw() {
-  
-//---------images-------//
-  //print(mouseX,mouseY)
-  background(255);
-   tint(255, 127)
-  image(bubbles,0,0)
-  tint(330, 330); 
-  image(teeth,90,150)
-  
-  
-//-------shapes---------//  
-  stroke(0);
-  fill(0,50,100);
-  rect(x, y, w, h)
-  fill(220)
-  rect(88,470,75,40)
-  
-//-----warning---------//
-  if (dragging == true){
-    if (mouseX > 90 && mouseX < 470 && mouseY > 160 &&     mouseY < 320) {
-      print("goodjob")
-    } else {
-      image(warning, 600, 80)
-      fill(0)
-      text("keep brushing!",630,250)
-  } 
-}
-  
-//-----timer--------//
-  fill(0)
-if (counter >= t) {
-     text(minutes + ":" + seconds, 100,500);
-    }  
-    if (counter < t) {
-    text(minutes + ":" + seconds, 100,500);
-    }
-    if (counter == 0) {
-    
-    text('game over', 500, 100 + 15);
-    }  
-  
-//-------drag-functions---------//
-// Is mouse over object
-  if (mouseX > x && mouseX < x + w && mouseY > y && mouseY < y + h) {
+   if (mouseX > x && mouseX < x + w && mouseY > y && mouseY < y + h) {
     rollover = true;
   } 
   else {
@@ -191,133 +273,167 @@ if (counter >= t) {
     x = mouseX + offsetX;
     y = mouseY + offsetY;
   }
-}
-function mousePressed() {
-  // Did I click on the rectangle?
-  if (mouseX > x && mouseX < x + w && mouseY > y && mouseY < y + h) {
-    dragging = true;
-    // If so, keep track of relative location of click to corner of rectangle
-    offsetX = x-mouseX;
-    offsetY = y-mouseY;
-  }
-}
-function mouseReleased() {
-  // Quit dragging
-  dragging = false;
-}
 
 
-//-------timer-functions-------//
+//-------------------------------------------------end of draw------//
+ }
+
+
 function timeIt() {
   // 1 counter = 1 second
-  if (counter > 0) {
-    counter--;
-  }
-  minutes = floor(counter/60);
-  seconds = counter % 60;
-  
-  // if (counter < 60)
-  
-//text(minutes + ":" + seconds);
+   if (MENU == 1){
+    if (counter > 0) {
+        counter--;
+        minutes = floor(counter/60);
+        seconds = counter % 60;
+    }
 }
+     
+     if (MENU == 2){
+    if (counter > 0) {
+        counter--;
+      minutes = floor(counter/120) ;
+      seconds = floor(counter % 120 );
+      //print(seconds)
+      if (seconds == 55 ) {
+    redraw()
+      compareStrings() 
+        print(i)
+     }
+      if (seconds == 50 ) {
+    redraw()
+       compareStrings()
+        print(i)
+     }
+    else if (seconds == 45 ) {
+    redraw()
+       compareStrings()
+       print(i)
+     }
+     else if (seconds == 48 ) {
+    redraw()
+     compareStrings()
+         print(i)
+     }
+      else if (seconds == 45 ) {
+    redraw()
+       compareStrings()
+         print(i)
+     }
+      else if (seconds == 42 ) {
+    redraw()
+      compareStrings()
+        print(i)
+     }
+      else if (seconds == 39 ) {
+    redraw()
+        compareStrings()
+        print(i)
+     }
+      else if (seconds == 36 ) {
+     redraw()
+         compareStrings()
+        print(i)
+     }
+      else if (seconds == 33 ) {
+     redraw()
+        compareStrings()
+        print(i)
+     }
+     else if (seconds == 30 ) {
+     redraw()
+         compareStrings()
+       print(i)
+     }
+     else if (seconds == 27 ) {
+    redraw()
+        compareStrings()
+       print(i)
+     }
+  if (seconds < 27){
+  fill(255, 204, 0);
+  ellipse(500,270,510)
+  fill(0);
+  textSize(100)
+  text("Good job!",500,270)
+  textSize(27)
+  text( "click the home button to return",500,320)
+  text("to the main menu!",470, 340)
+  button.hide()
+  input.value('').hide();
+  redraw()
+    }
+      }
+  }
+  
+  if (MENU==0){
+    counter = 60
+     input.value('').hide();
+  }
+  
 
-
-//------------------------END---------//
-
-//------------This-Class-Is-Needed-For-activity-to-work------/
- class Draggable {
-  constructor(x, y, w, h) {
-    this.dragging = false; // Is the object being dragged?
-    this.rollover = false; // Is the mouse over the ellipse?
+  
+}
+ 
+   
+   class Bubble {
+  constructor(x, y, r) {
     this.x = x;
     this.y = y;
-    this.w = w;
-    this.h = h;
-    this.offsetX = 0;
-    this.offsetY = 0;
+    this.r = r;
   }
-
-  over() {
-    // Is mouse over object
-    if (mouseX > this.x && mouseX < this.x + this.w && mouseY > this.y && mouseY < this.y + this.h) {
-      this.rollover = true;
-    } else {
-      this.rollover = false;
-    }
-  }
-
-  update() {
-    // Adjust location if being dragged
-    if (this.dragging) {
-      this.x = mouseX + this.offsetX;
-      this.y = mouseY + this.offsetY;
-    }
-  }
-
-  show() {
-    stroke(0);
-    // Different fill based on state
-    if (this.dragging) {
-      fill(50);
-    } else if (this.rollover) {
-      fill(100);
-    } else {
-      fill(175, 200);
-    }
-    rect(this.x, this.y, this.w, this.h);
-  }
-
-  pressed() {
-    // Did I click on the rectangle?
-    if (mouseX > this.x && mouseX < this.x + this.w && mouseY > this.y && mouseY < this.y + this.h) {
-      this.dragging = true;
-      // If so, keep track of relative location of click to corner of rectangle
-      this.offsetX = this.x - mouseX;
-      this.offsetY = this.y - mouseY;
-    }
-  }
-
-  released() {
-    // Quit dragging
-    this.dragging = false;
-  }
-}
-//-------END-----------//
-
-//-------TYPE ACTIVITY----------//
-var words = ["monkey", "rain","dance","purple","work"]; //Insert array of random words here
-
-
-function preload(){
-paper = loadImage('paper.png')
-}
-
-
-function setup() {
-  createCanvas(1000, 600);
-   paper.resize(1000,600);
   
-  input = createInput();
-  input.position(410, 500);
-
-  button = createButton('enter');
-  button.position(input.x + input.width, 500);
-noLoop()
+  contains (px, py) {
+    let d = dist(px, py, this.x, this.y);
+    if (d < this.r) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+  
+  move() {
+ 	this.x = this.x + random(-2,2);
+	this.y = this.y + random(-2,2);    
+  }
+  
+  
+  show() {
+ 	image(dirt, this.x, this.y, 100, 100);
+  }
+}
+//-------------------------------------------------String comparison------//
+function compareStrings(){
+  
+  user = input.value();
+  system = displayRandom;
+ 
+  
+  if (user == system){
+  print("yes!")
+    i++;
+  } else {
+    print ("try again!") 
+    i--;
+  }
+ // redraw(1)
+  
 
 }
 
-function draw() {
-   image(paper,0,0);
-  textSize(24)
-  text("Type in what you see below!", 360, 28)
-  textSize(20);
-  text("(Remember to include uppercase letters and symbols)",280,54)
-  var randomword = random(words);//picks a random word
+function randomWord() {
+  displayRandom = random(words);
   textAlign(CENTER);
   textSize(100);
   textFont("Comic Sans MS")
-  text(randomword,500,200);
-  
-  
-//line(500, 0, 500, 600); //<-- this will draw a line in the middle of the screen if you need to align anything//
+  fill(0)
+  text(displayRandom,500,200)
+  //redraw(1)
 }
+function newText(){
+  input = input.value()
+  console.log(input)
+  print ("yes")
+}
+
+//-------END----//
